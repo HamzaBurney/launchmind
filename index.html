@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsomeVet</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .header {
+            background-image: linear-gradient(to bottom, #34a8ff, #2e77b5);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .header h1 {
+            font-weight: 700;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-weight: 300;
+            font-size: 18px;
+        }
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .feature {
+            margin: 20px;
+            padding: 20px;
+            width: calc(33.33% - 20px);
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .feature h2 {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .feature p {
+            font-weight: 300;
+            font-size: 14px;
+        }
+        .call-to-action {
+            background-image: linear-gradient(to bottom, #34a8ff, #2e77b5);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px;
+            cursor: pointer;
+        }
+        .call-to-action:hover {
+            background-image: linear-gradient(to bottom, #2e77b5, #1a4d7a);
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            clear: both;
+        }
+        @media only screen and (max-width: 768px) {
+            .feature {
+                width: calc(50% - 20px);
+            }
+        }
+        @media only screen and (max-width: 480px) {
+            .feature {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Find and Book Vet Appointments with PawsomeVet</h1>
+            <p>Get your dog the medical care they need, whenever and wherever you need it</p>
+        </div>
+        <div class="features">
+            <div class="feature">
+                <h2>Vet Search</h2>
+                <p>Search for nearby vets using Google Maps API, with filtering options for ratings, distance, and specialties</p>
+            </div>
+            <div class="feature">
+                <h2>Vet Profiles</h2>
+                <p>View detailed vet profiles showcasing their practice information, services offered, and real-time availability</p>
+            </div>
+            <div class="feature">
+                <h2>Real-time Availability</h2>
+                <p>Get real-time updates of vet availability, ensuring you see the most up-to-date scheduling information</p>
+            </div>
+            <div class="feature">
+                <h2>Appointment Scheduling</h2>
+                <p>Book and manage appointments directly within the app, with secure payment processing using Stripe or PayPal</p>
+            </div>
+            <div class="feature">
+                <h2>User Reviews and Ratings</h2>
+                <p>Leave feedback and rate your experience with each vet, using a 5-star rating system and text reviews</p>
+            </div>
+        </div>
+        <div class="call-to-action">Get Early Access</div>
+    </div>
+    <div class="footer">PawsomeVet</div>
+</body>
+</html>

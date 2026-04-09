@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsomeVet</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(90deg, #34A8FF 0%, #5C63FF 100%);
+            padding: 20px;
+            text-align: center;
+            color: #ffffff;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .headline {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .sub-headline {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        .features {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .feature {
+            margin-bottom: 20px;
+        }
+        .feature-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .feature-description {
+            font-size: 14px;
+            font-weight: 400;
+        }
+        .call-to-action {
+            background: linear-gradient(90deg, #34A8FF 0%, #5C63FF 100%);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .call-to-action:hover {
+            background: linear-gradient(90deg, #2E73FF 0%, #4C59FF 100%);
+        }
+        .footer {
+            background-color: #2f2f2f;
+            padding: 10px;
+            text-align: center;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 400;
+            margin-top: 20px;
+        }
+        @media only screen and (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            .header {
+                padding: 15px;
+            }
+            .features {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="headline">Find and Book Vet Appointments with Ease</h1>
+            <p class="sub-headline">Get instant access to nearby veterinarians and book appointments in real-time with PawsomeVet</p>
+        </div>
+        <div class="features">
+            <h2>Our Features</h2>
+            <div class="feature">
+                <p class="feature-name">Vet Search</p>
+                <p class="feature-description">Search for nearby veterinarians using Google Maps API, filter by ratings, distance, and specialties</p>
+            </div>
+            <div class="feature">
+                <p class="feature-name">Vet Profiles</p>
+                <p class="feature-description">View detailed vet profiles, including practice information, services offered, and real-time availability</p>
+            </div>
+            <div class="feature">
+                <p class="feature-name">Real-time Availability</p>
+                <p class="feature-description">Get real-time updates on vet availability, ensuring you see the most up-to-date scheduling information</p>
+            </div>
+            <div class="feature">
+                <p class="feature-name">Appointment Scheduling</p>
+                <p class="feature-description">Book and manage appointments directly within the app, with secure payment processing using Stripe or PayPal</p>
+            </div>
+            <div class="feature">
+                <p class="feature-name">User Reviews and Ratings</p>
+                <p class="feature-description">Leave feedback and rate your experience with each vet, using a 5-star rating system and text reviews</p>
+            </div>
+            <button class="call-to-action">Get Early Access</button>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2023 PawsomeVet</p>
+    </div>
+</body>
+</html>

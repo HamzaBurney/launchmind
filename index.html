@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PawVet – Instant Vet Locator & Booking</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap');
+
+    :root {
+      --primary: #ff6f61;
+      --primary-dark: #e65b50;
+      --gradient-start: #ff9a8b;
+      --gradient-end: #ff6f61;
+      --bg: #f9fafb;
+      --card-bg: #ffffff;
+      --text: #2d2d2d;
+      --muted: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      color: #fff;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #fff;
+      color: var(--primary-dark);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .cta-button:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    .features {
+      padding: 3rem 1rem;
+    }
+
+    .features h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--primary);
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    footer {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      .cta-button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Find a Vet Instantly, Book in Seconds</h1>
+      <p>Locate nearby veterinary clinics with real‑time appointment slots, read trusted reviews, and book visits on the go—while giving clinics a simple way to broadcast availability.</p>
+      <a href="#" class="cta-button">Get Early Access</a>
+    </div>
+  </header>
+
+  <section class="features">
+    <div class="container">
+      <h2>All the Tools You Need to Care for Your Dog</h2>
+      <div class="feature-list">
+        <div class="feature-card">
+          <h3>Geolocation Vet Search</h3>
+          <p>Automatically detects the user’s location and displays a list of nearby veterinary clinics with distance, ratings, and operating hours.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Real‑time Availability Feed</h3>
+          <p>Integrates with clinic scheduling systems (or a simple web portal for small clinics) to show live open appointment slots for each vet location.</p>
+        </div>
+        <div class="feature-card">
+          <h3>In‑app Appointment Booking</h3>
+          <p>Allows users to select a slot, confirm the appointment, and receive a digital receipt; clinics get instant notification and can confirm or suggest alternatives.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Clinic Reviews & Ratings</h3>
+          <p>Aggregates verified owner reviews, star ratings, and photos; owners can filter results by rating, services offered, or emergency care.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Push Notification & Reminder System</h3>
+          <p>Sends confirmation, reminder, and status‑change alerts to owners; clinics can broadcast urgent openings or last‑minute cancellations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © 2026 PawVet – All Rights Reserved
+    </div>
+  </footer>
+</body>
+</html>

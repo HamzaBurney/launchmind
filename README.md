@@ -204,7 +204,7 @@ launchmind/
 | Platform | What the agent does |
 |---|---|
 | **OpenAI / Groq / Gemini APIs** | All 5 agents use a shared OpenAI-compatible LLM client. Provider is selected with `LLM_PROVIDER`. |
-| **GitHub** | Engineer publishes once after QA pass: creates one issue, commits `index.html`, opens one PR, then commits `README.md` with final links on the same branch. |
+| **GitHub** | Engineer publishes once after QA pass: creates one issue, commits `index.html`, opens one PR, then commits updated `README.md` plus files under `output/` and `logs/` on the same branch. |
 | **Slack** | Marketing publishes one Block Kit launch announcement to `#launches` after QA pass. |
 | **Gmail API** | Marketing sends one outreach email after QA pass. |
 
@@ -224,5 +224,5 @@ After running, you'll find:
 
 These values are auto-updated after a successful publish run.
 
-- **GitHub PR (Engineer):** *(will be filled after first run)*
-- **Slack workspace:** *(add invite link here)*
+- **GitHub PR (Engineer):** (https://github.com/HamzaBurney/launchmind/pull/17)
+- **Slack workspace:** (https://join.slack.com/t/launchmindtalk/shared_invite/zt-3ucudhbnm-szzuxbhFVzK3dHu6lC~rLg)

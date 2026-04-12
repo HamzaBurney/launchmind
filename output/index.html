@@ -2,152 +2,184 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JobPilot – One‑Click Job Applications</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus TextSwap – Trusted Peer‑to‑Peer Textbook Marketplace</title>
+  <meta name="description" content="A trusted peer‑to‑peer marketplace that lets college students quickly list, discover, and buy second‑hand textbooks, cutting costs and campus waste.">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
     :root {
-      --primary: #4f46e5;
-      --primary-dark: #4338ca;
-      --bg-gradient-start: #f3f4f6;
-      --bg-gradient-end: #e5e7eb;
-      --text-primary: #111827;
-      --text-muted: #6b7280;
+      --primary: #4a90e2;
+      --primary-dark: #357ab8;
+      --bg-light: #f9fafb;
+      --text-dark: #1a202c;
+      --text-muted: #4a5568;
       --card-bg: #ffffff;
-      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow: rgba(0,0,0,0.1);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       font-family: 'Inter', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
       line-height: 1.6;
-      color: var(--text-primary);
-      background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
 
-    a { text-decoration: none; color: inherit; }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
 
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: #fff;
+      padding: 2rem 1rem;
       text-align: center;
-      padding: 4rem 1.5rem;
-    }
-    header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    header p {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .cta-btn {
-      background: #fff;
-      color: var(--primary);
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      box-shadow: 0 4px 12px var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px var(--shadow);
     }
 
-    main { flex: 1; padding: 2rem 1rem; }
-    .section-title {
-      text-align: center;
-      margin-bottom: 2rem;
-      font-size: 1.5rem;
-      font-weight: 600;
+    header h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+      font-weight: 700;
     }
-    .features {
+
+    header p {
+      margin: 0 0 1.5rem;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: #fff;
+      color: var(--primary);
+      font-weight: 600;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .cta-btn:hover {
+      background: #f0f4f8;
+      transform: translateY(-2px);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    #features {
+      margin-top: 3rem;
+    }
+
+    #features h2 {
+      text-align: center;
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-list {
       display: grid;
       gap: 1.5rem;
+      grid-template-columns: 1fr;
     }
+
     .feature-card {
       background: var(--card-bg);
       padding: 1.5rem;
       border-radius: 0.75rem;
       box-shadow: 0 2px 8px var(--shadow);
     }
+
     .feature-card h3 {
-      font-size: 1.25rem;
+      margin-top: 0;
       margin-bottom: 0.5rem;
+      font-size: 1.25rem;
       color: var(--primary-dark);
     }
+
     .feature-card p {
-      font-size: 0.95rem;
+      margin: 0;
       color: var(--text-muted);
+      white-space: pre-line;
     }
 
     footer {
-      background: var(--primary);
+      background: var(--text-dark);
       color: #fff;
       text-align: center;
       padding: 1rem;
-      font-size: 0.9rem;
+      margin-top: 4rem;
     }
 
-    /* Mobile‑first grid */
     @media (min-width: 600px) {
-      .features { grid-template-columns: repeat(2, 1fr); }
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      header p {
+        font-size: 1.125rem;
+      }
+
+      .feature-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
+
     @media (min-width: 900px) {
-      header h1 { font-size: 2.5rem; }
-      header p { font-size: 1.125rem; }
-      .features { grid-template-columns: repeat(3, 1fr); }
+      .feature-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Trusted Peer‑to‑Peer Marketplace for College Students to List, Discover &amp; Buy Second‑Hand Textbooks</h1>
+    <p>Cut costs, reduce campus waste, and get the books you need fast.</p>
+    <a href="#signup" class="cta-btn">Get Early Access</a>
+  </header>
 
-<header>
-  <h1>Land Your Dream Job with One Click</h1>
-  <p>JobPilot automatically discovers relevant openings, tailors your résumé with AI, and lets you apply instantly — while delivering a pre‑qualified talent pipeline to recruiters.</p>
-  <a href="#" class="cta-btn">Get Early Access</a>
-</header>
+  <main>
+    <section id="features">
+      <h2>Features</h2>
+      <div class="feature-list">
+        <div class="feature-card">
+          <h3>Listings &amp; Pricing Engine</h3>
+          <p>Create, edit, and expire textbook listings; AI‑driven price‑suggestion based on ISBN, condition, and recent market data; automatic expiration after 30 days with optional renewal.
+Non‑functional: supports 5 k concurrent listing edits, data stored encrypted at rest.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Search &amp; Discovery</h3>
+          <p>Full‑text search by ISBN, title, author, and filters (campus, price, condition). Results delivered &lt;200 ms latency; cached for peak enrollment spikes.
+Scalable to 20 k simultaneous queries.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Messaging &amp; Notifications</h3>
+          <p>In‑app real‑time chat, push‑notifications, email &amp; SMS alerts for new offers, messages, and transaction status changes. GDPR‑compliant opt‑out handling.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Payments &amp; Escrow</h3>
+          <p>Stripe integration for credit/debit cards and ACH; platform holds buyer payment in escrow, releases to seller after confirmed receipt. Commission 8 % + $0.30 per transaction; dispute workflow with 48‑hour resolution window.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Admin &amp; Analytics Dashboard</h3>
+          <p>Moderator tools to flag/invalidate listings, manage disputes, and monitor fraud patterns. KPI widgets: listings/week, conversion rate, avg. time‑to‑sale, churn. Exportable CSV reports. SLA: 99.9 % uptime.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<main>
-  <section id="features">
-    <h2 class="section-title">Key Features</h2>
-    <div class="features">
-      <div class="feature-card">
-        <h3>Job Aggregation Engine</h3>
-        <p>Scalable crawler and API integrator that normalizes listings from 150+ sources, de‑duplicates, and enriches with standardized metadata; SLA &lt; 5 seconds per query, GDPR‑compliant data handling.</p>
-      </div>
-      <div class="feature-card">
-        <h3>AI‑Powered Resume Tailoring</h3>
-        <p>Large‑language‑model service that extracts required skills from a posting, rewrites the user’s master résumé to match ATS keywords, and stores version history; includes rate‑limit fallback to local transformer for cost control.</p>
-      </div>
-      <div class="feature-card">
-        <h3>One‑Click Application Launcher</h3>
-        <p>Automation layer that fills web forms or sends ATS‑compatible JSON payloads via secure webhook, logs status, and retries on failure; conforms to OAuth2 for partner ATS integration.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Candidate Dashboard & Daily Match Feed</h3>
-        <p>React‑based UI that shows personalized job matches, application progress, and analytics (open rate, interview invites); meets WCAG 2.1 AA accessibility and loads under 2 seconds on 3G.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Recruiter Talent Feed & Licensing Portal</h3>
-        <p>Secure portal where recruiters can subscribe, define search criteria, and receive a real‑time feed of AI‑matched candidates; includes role‑based access control and audit logging.</p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  © 2026 JobPilot
-</footer>
-
+  <footer>
+    © 2026 Campus TextSwap
+  </footer>
 </body>
 </html>

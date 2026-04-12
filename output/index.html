@@ -1,148 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TextbookHub</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
-        body {
-            font-family: 'Open Sans', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        .header {
-            background-image: linear-gradient(to bottom, #34a8ff, #2f80ed);
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px 10px 0 0;
-        }
-        .header h1 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .header p {
-            font-size: 18px;
-            font-weight: 300;
-        }
-        .features {
-            padding: 20px;
-        }
-        .feature {
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #f7f7f7;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .feature h2 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 0;
-        }
-        .feature p {
-            font-size: 16px;
-            font-weight: 300;
-        }
-        .call-to-action {
-            padding: 20px;
-            text-align: center;
-        }
-        .call-to-action button {
-            background-image: linear-gradient(to bottom, #34a8ff, #2f80ed);
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 10px;
-        }
-        .call-to-action button:hover {
-            background-image: linear-gradient(to bottom, #2f80ed, #34a8ff);
-        }
-        .footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            clear: both;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        @media only screen and (max-width: 768px) {
-            .container {
-                margin: 20px auto;
-                padding: 10px;
-            }
-            .header {
-                padding: 10px;
-            }
-            .features {
-                padding: 10px;
-            }
-            .feature {
-                margin-bottom: 10px;
-                padding: 10px;
-            }
-            .call-to-action {
-                padding: 10px;
-            }
-            .call-to-action button {
-                padding: 10px 20px;
-                font-size: 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobPilot – One‑Click Job Applications</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --bg-gradient-start: #f3f4f6;
+      --bg-gradient-end: #e5e7eb;
+      --text-primary: #111827;
+      --text-muted: #6b7280;
+      --card-bg: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: linear-gradient(to bottom, var(--bg-gradient-start), var(--bg-gradient-end));
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      text-align: center;
+      padding: 4rem 1.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-btn {
+      background: #fff;
+      color: var(--primary);
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px var(--shadow);
+    }
+
+    main { flex: 1; padding: 2rem 1rem; }
+    .section-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .features {
+      display: grid;
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Mobile‑first grid */
+    @media (min-width: 600px) {
+      .features { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      header h1 { font-size: 2.5rem; }
+      header p { font-size: 1.125rem; }
+      .features { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>TextbookHub: Buy and Sell Second-Hand Textbooks</h1>
-            <p>Join our online marketplace and discover a cost-effective and sustainable alternative to traditional bookstores.</p>
-        </div>
-        <div class="features">
-            <h2>Features</h2>
-            <div class="feature">
-                <h2>Textbook Listing</h2>
-                <p>Create listings for your second-hand textbooks, including title, author, edition, condition, and price.</p>
-            </div>
-            <div class="feature">
-                <h2>Search and Filter</h2>
-                <p>Search for textbooks by title, author, or course, and filter results by price, condition, and location.</p>
-            </div>
-            <div class="feature">
-                <h2>Payment Gateway</h2>
-                <p>Integrate a secure payment gateway to facilitate transactions between buyers and sellers, with options for credit card, PayPal, or other payment methods.</p>
-            </div>
-            <div class="feature">
-                <h2>User Profiles</h2>
-                <p>Create user profiles to showcase your listings, purchase history, and ratings, with options for profile customization and privacy settings.</p>
-            </div>
-            <div class="feature">
-                <h2>Messaging System</h2>
-                <p>Develop a messaging system for buyers and sellers to communicate with each other, with features for responding to inquiries, negotiating prices, and arranging meetups.</p>
-            </div>
-        </div>
-        <div class="call-to-action">
-            <button>Get Early Access</button>
-        </div>
+
+<header>
+  <h1>Land Your Dream Job with One Click</h1>
+  <p>JobPilot automatically discovers relevant openings, tailors your résumé with AI, and lets you apply instantly — while delivering a pre‑qualified talent pipeline to recruiters.</p>
+  <a href="#" class="cta-btn">Get Early Access</a>
+</header>
+
+<main>
+  <section id="features">
+    <h2 class="section-title">Key Features</h2>
+    <div class="features">
+      <div class="feature-card">
+        <h3>Job Aggregation Engine</h3>
+        <p>Scalable crawler and API integrator that normalizes listings from 150+ sources, de‑duplicates, and enriches with standardized metadata; SLA &lt; 5 seconds per query, GDPR‑compliant data handling.</p>
+      </div>
+      <div class="feature-card">
+        <h3>AI‑Powered Resume Tailoring</h3>
+        <p>Large‑language‑model service that extracts required skills from a posting, rewrites the user’s master résumé to match ATS keywords, and stores version history; includes rate‑limit fallback to local transformer for cost control.</p>
+      </div>
+      <div class="feature-card">
+        <h3>One‑Click Application Launcher</h3>
+        <p>Automation layer that fills web forms or sends ATS‑compatible JSON payloads via secure webhook, logs status, and retries on failure; conforms to OAuth2 for partner ATS integration.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Candidate Dashboard & Daily Match Feed</h3>
+        <p>React‑based UI that shows personalized job matches, application progress, and analytics (open rate, interview invites); meets WCAG 2.1 AA accessibility and loads under 2 seconds on 3G.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Recruiter Talent Feed & Licensing Portal</h3>
+        <p>Secure portal where recruiters can subscribe, define search criteria, and receive a real‑time feed of AI‑matched candidates; includes role‑based access control and audit logging.</p>
+      </div>
     </div>
-    <div class="footer">
-        <p>&copy; 2024 TextbookHub</p>
-    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 JobPilot
+</footer>
+
 </body>
 </html>

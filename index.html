@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CampusBook – Campus‑Focused Textbook Marketplace</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    :root {
+      --primary: #0066ff;
+      --primary-dark: #004ecb;
+      --bg-gradient: linear-gradient(135deg, #f0f4ff, #e6f0ff);
+      --text-color: #333;
+      --white: #fff;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-color);
+      line-height: 1.6;
+      background: var(--bg-gradient);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      background: var(--white);
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .hero {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: var(--white);
+      color: var(--primary);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .cta-btn:hover {
+      background: var(--primary-dark);
+      color: var(--white);
+    }
+
+    .section {
+      padding: 2rem 1.5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .features {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    footer {
+      background: #222;
+      color: #ddd;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (min-width: 600px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">CampusBook</div>
+  </header>
+
+  <section class="hero">
+    <h1>Buy &amp; Sell Textbooks on Campus, Fast &amp; Safe</h1>
+    <p>Verified student marketplace that lets you list, discover, and purchase second‑hand textbooks, saving money and reducing waste.</p>
+    <a href="#" class="cta-btn">Get Early Access</a>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Key Features</h2>
+    <div class="features">
+      <div class="feature-card">
+        <h3>Student Verification &amp; Registration</h3>
+        <p>Secure sign‑up using university email or single sign‑on (SSO); automatic validation against registrar records to confirm active student status.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Listing Creation Wizard</h3>
+        <p>Step‑by‑step UI for sellers to enter title, author, edition, ISBN, condition rating, price, and upload up to 5 photos; supports bulk import via CSV for power sellers.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Search, Filter &amp; Course Mapping</h3>
+        <p>Full‑text search with filters for ISBN, price range, condition, and automatically suggested listings based on the user’s enrolled courses.</p>
+      </div>
+      <div class="feature-card">
+        <h3>In‑App Messaging &amp; Escrow Payment</h3>
+        <p>Secure messaging between buyer and seller; integrated payment gateway holds funds in escrow, releases to seller after buyer confirms receipt, with a 10% platform commission.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Rating, Review &amp; Admin Moderation Dashboard</h3>
+        <p>Post‑transaction star rating and written review; admin UI for dispute resolution, content removal, and campus‑specific policy enforcement.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 CampusBook. All rights reserved.
+  </footer>
+
+</body>
+</html>

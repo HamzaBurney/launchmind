@@ -15,9 +15,7 @@ venv/
 env/
 .venv/
 
-# Output artifacts (generated at runtime)
-output/
-logs/
+# Output artifacts are intentionally tracked for publish snapshots.
 
 # OS
 .DS_Store

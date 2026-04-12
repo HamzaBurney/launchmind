@@ -292,11 +292,11 @@ def run(idea: str, max_revisions: int = 2):
         raise RuntimeError("Product agent failed to deliver an acceptable spec.")
 
     # ── 4. Draft loop (no external side effects) ───────────────────────
-    from agents.engineer_agent import finalize_readme_links, run as run_engineer
+    from agents.engineer_agent import finalize_publish_artifacts, run as run_engineer
     from agents.marketing_agent import run as run_marketing
     from agents.qa_agent import run as run_qa
 
-    draft_attempt_limit = 4
+    draft_attempt_limit = 6
     engineer_feedback = ""
     marketing_feedback = ""
 
@@ -394,9 +394,10 @@ def run(idea: str, max_revisions: int = 2):
     pr_url = ""
     issue_url = ""
     workflow_status = "qa_failed_pre_publish"
-    readme_update_result = {
+    artifact_update_result = {
         "status": "skipped",
         "committed": False,
+        "committed_files": [],
         "warnings": [],
         "error": "",
     }
@@ -454,32 +455,6 @@ def run(idea: str, max_revisions: int = 2):
         if marketing_publish_result:
             marketing_result_payload = marketing_publish_result["payload"]
 
-        readme_update_result = finalize_readme_links(
-            branch=engineer_result_payload.get("branch", ""),
-            pr_url=pr_url,
-            slack_workspace_url=os.environ.get("SLACK_WORKSPACE_INVITE_URL", "").strip(),
-        )
-        engineer_result_payload["readme_update"] = readme_update_result
-
-        if readme_update_result.get("error"):
-            _log(
-                "README link update failed",
-                readme_update_result.get("error", "Unknown README update failure."),
-                "Continuing with published workflow state",
-            )
-        elif readme_update_result.get("status") == "updated":
-            _log(
-                "README links updated",
-                "README links were refreshed with latest publish URLs.",
-                "Committed README.md to publish branch",
-            )
-        elif readme_update_result.get("warnings"):
-            _log(
-                "README links partially updated",
-                "; ".join(str(w) for w in readme_update_result.get("warnings", [])),
-                "Publish completed with README warnings",
-            )
-
         workflow_status = "published"
     else:
         _log(
@@ -493,6 +468,21 @@ def run(idea: str, max_revisions: int = 2):
     with open("logs/ceo_decisions.json", "w", encoding="utf-8") as f:
         json.dump(_decision_log, f, indent=2)
     bus.dump_log()
+
+    if publish_executed:
+        artifact_update_result = finalize_publish_artifacts(
+            branch=engineer_result_payload.get("branch", ""),
+            pr_url=pr_url,
+            slack_workspace_url=os.environ.get("SLACK_WORKSPACE_INVITE_URL", "").strip(),
+        )
+        engineer_result_payload["artifact_update"] = artifact_update_result
+        # Backward compatibility for existing consumers that read this key.
+        engineer_result_payload["readme_update"] = artifact_update_result
+
+        if artifact_update_result.get("error"):
+            print(f"[CEO] Artifact finalization error: {artifact_update_result['error']}")
+        for warning in artifact_update_result.get("warnings", []):
+            print(f"[CEO] Artifact finalization warning: {warning}")
 
     print("\n" + "=" * 60)
     print("CEO AGENT COMPLETE")
@@ -509,6 +499,7 @@ def run(idea: str, max_revisions: int = 2):
         "publish_executed": publish_executed,
         "draft_attempts_used": draft_attempts_used,
         "workflow_status": workflow_status,
-        "readme_update": readme_update_result,
+        "artifact_update": artifact_update_result,
+        "readme_update": artifact_update_result,
         "decision_log": _decision_log,
     }

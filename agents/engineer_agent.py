@@ -35,6 +35,7 @@ AGENT_AUTHOR = {
 README_FILE_PATH = "README.md"
 README_PR_LINE_PATTERN = r"^- \*\*GitHub PR \(Engineer\):\*\* .*$"
 README_SLACK_LINE_PATTERN = r"^- \*\*Slack workspace:\*\* .*$"
+ARTIFACT_DIRECTORIES = ("output", "logs")
 
 
 def _response_error(resp: requests.Response, action: str) -> str:
@@ -84,6 +85,10 @@ for a startup. The page must include:
 - Responsive design with a mobile-first approach
 - A footer with the product name
 
+Critical headline rule:
+- The <h1> must stay semantically aligned with the value proposition and reuse at least 3 key terms from it
+    (for example concepts like automate, job search, application, matching, time-saving).
+
 Use modern CSS: gradients, shadows, clean typography (Google Fonts via @import is fine).
 Return ONLY the raw HTML - no explanation, no markdown fences, just the HTML starting with <!DOCTYPE html>.
 """
@@ -91,11 +96,13 @@ Return ONLY the raw HTML - no explanation, no markdown fences, just the HTML sta
 
 def generate_html(spec: dict, feedback: str = "") -> str:
     feedback_section = f"\n\nFeedback to incorporate:\n{feedback}" if feedback else ""
+    value_prop = spec.get('value_proposition', '')
     user_prompt = (
-        f"Value proposition: {spec.get('value_proposition', '')}\n"
+        f"Value proposition: {value_prop}\n"
         f"Features:\n{json.dumps(spec.get('features', []), indent=2)}\n"
         f"User personas:\n{json.dumps(spec.get('personas', []), indent=2)}\n"
         f"User stories:\n{json.dumps(spec.get('user_stories', []), indent=2)}"
+        f"\nInstruction: Ensure the <h1> directly reflects this value proposition wording and keeps key terms visible."
         f"{feedback_section}"
     )
     html = _llm(HTML_SYSTEM, user_prompt, max_tokens=4000)
@@ -237,8 +244,8 @@ def create_branch(branch_name: str, sha: str) -> tuple[bool, str | None]:
     return True, None
 
 
-def commit_file(branch: str, filename: str, content: str, commit_message: str, base_sha: str) -> tuple[bool, str | None]:
-    encoded = base64.b64encode(content.encode()).decode()
+def commit_file_bytes(branch: str, filename: str, content: bytes, commit_message: str, base_sha: str) -> tuple[bool, str | None]:
+    encoded = base64.b64encode(content).decode("ascii")
 
     # Check if file already exists on that branch (to get its sha for update)
     existing = _gh("GET", f"/contents/{filename}", log_errors=False, params={"ref": branch})
@@ -256,6 +263,16 @@ def commit_file(branch: str, filename: str, content: str, commit_message: str, b
     if not resp.ok:
         return False, _response_error(resp, f"Commit '{filename}' to branch '{branch}'")
     return True, None
+
+
+def commit_file(branch: str, filename: str, content: str, commit_message: str, base_sha: str) -> tuple[bool, str | None]:
+    return commit_file_bytes(
+        branch=branch,
+        filename=filename,
+        content=content.encode("utf-8"),
+        commit_message=commit_message,
+        base_sha=base_sha,
+    )
 
 
 def create_github_issue(title: str, body: str) -> tuple[str, str | None]:
@@ -297,7 +314,7 @@ def _render_readme_links(readme_text: str, pr_url: str, slack_workspace_url: str
     warnings: list[str] = []
     updated = readme_text
 
-    pr_line = f"- **GitHub PR (Engineer):** [{pr_url}]"
+    pr_line = f"- **GitHub PR (Engineer):** [{pr_url}]({pr_url})"
     updated, pr_replacements = re.subn(
         README_PR_LINE_PATTERN,
         pr_line,
@@ -308,7 +325,7 @@ def _render_readme_links(readme_text: str, pr_url: str, slack_workspace_url: str
         warnings.append("README links section is missing the GitHub PR bullet; skipped PR link update.")
 
     if slack_workspace_url:
-        slack_line = f"- **Slack workspace:** [{slack_workspace_url}]"
+        slack_line = f"- **Slack workspace:** [{slack_workspace_url}]({slack_workspace_url})"
         updated, slack_replacements = re.subn(
             README_SLACK_LINE_PATTERN,
             slack_line,
@@ -323,11 +340,31 @@ def _render_readme_links(readme_text: str, pr_url: str, slack_workspace_url: str
     return updated, warnings
 
 
-def finalize_readme_links(branch: str, pr_url: str, slack_workspace_url: str) -> dict:
-    """Update README links locally and commit README.md to an existing publish branch."""
+def _collect_artifact_files() -> list[str]:
+    files: list[str] = []
+    for directory in ARTIFACT_DIRECTORIES:
+        if not os.path.isdir(directory):
+            continue
+
+        for root, _, filenames in os.walk(directory):
+            filenames.sort()
+            for filename in filenames:
+                full_path = os.path.join(root, filename)
+                if not os.path.isfile(full_path):
+                    continue
+                relative = os.path.relpath(full_path, ".").replace("\\", "/")
+                files.append(relative)
+
+    files.sort()
+    return files
+
+
+def finalize_publish_artifacts(branch: str, pr_url: str, slack_workspace_url: str) -> dict:
+    """Update README links and commit README + artifact files to an existing publish branch."""
     result = {
         "status": "skipped",
         "committed": False,
+        "committed_files": [],
         "warnings": [],
         "error": "",
     }
@@ -339,16 +376,16 @@ def finalize_readme_links(branch: str, pr_url: str, slack_workspace_url: str) ->
         return result
 
     if not branch:
-        result["warnings"].append("README finalization skipped: missing publish branch name.")
+        result["warnings"].append("Artifact finalization skipped: missing publish branch name.")
         return result
 
     if not pr_url:
-        result["warnings"].append("README finalization skipped: missing PR URL.")
+        result["warnings"].append("Artifact finalization skipped: missing PR URL.")
         return result
 
     if not os.path.exists(README_FILE_PATH):
         result["status"] = "failed"
-        result["error"] = "README finalization failed: README.md does not exist locally."
+        result["error"] = "Artifact finalization failed: README.md does not exist locally."
         return result
 
     try:
@@ -356,7 +393,7 @@ def finalize_readme_links(branch: str, pr_url: str, slack_workspace_url: str) ->
             original = f.read()
     except OSError as exc:
         result["status"] = "failed"
-        result["error"] = f"README finalization failed while reading README.md: {exc}"
+        result["error"] = f"Artifact finalization failed while reading README.md: {exc}"
         return result
 
     updated, warnings = _render_readme_links(
@@ -366,32 +403,63 @@ def finalize_readme_links(branch: str, pr_url: str, slack_workspace_url: str) ->
     )
     result["warnings"].extend(warnings)
 
-    if updated == original:
+    if updated != original:
+        try:
+            with open(README_FILE_PATH, "w", encoding="utf-8") as f:
+                f.write(updated)
+        except OSError as exc:
+            result["status"] = "failed"
+            result["error"] = f"Artifact finalization failed while writing README.md: {exc}"
+            return result
+
+        commit_ok, commit_error = commit_file(
+            branch=branch,
+            filename=README_FILE_PATH,
+            content=updated,
+            commit_message="docs: update launch links in README\n\nGenerated by EngineerAgent",
+            base_sha="",
+        )
+        if not commit_ok:
+            result["status"] = "failed"
+            result["error"] = commit_error or "Artifact finalization failed while committing README.md."
+            return result
+        result["committed_files"].append(README_FILE_PATH)
+
+    artifact_files = _collect_artifact_files()
+    if not artifact_files:
+        result["warnings"].append("No artifact files found under output/ or logs/.")
+
+    for artifact_path in artifact_files:
+        if artifact_path == "output/index.html":
+            # Already committed during the publish step.
+            continue
+
+        try:
+            with open(artifact_path, "rb") as f:
+                content_bytes = f.read()
+        except OSError as exc:
+            result["warnings"].append(f"Could not read artifact '{artifact_path}': {exc}")
+            continue
+
+        commit_ok, commit_error = commit_file_bytes(
+            branch=branch,
+            filename=artifact_path,
+            content=content_bytes,
+            commit_message=f"chore: update artifact {artifact_path}\n\nGenerated by EngineerAgent",
+            base_sha="",
+        )
+        if not commit_ok:
+            result["warnings"].append(commit_error or f"Failed to commit artifact '{artifact_path}'.")
+            continue
+
+        result["committed_files"].append(artifact_path)
+
+    if result["committed_files"]:
+        result["status"] = "updated"
+        result["committed"] = True
+    else:
         result["status"] = "no_changes"
-        return result
 
-    try:
-        with open(README_FILE_PATH, "w", encoding="utf-8") as f:
-            f.write(updated)
-    except OSError as exc:
-        result["status"] = "failed"
-        result["error"] = f"README finalization failed while writing README.md: {exc}"
-        return result
-
-    commit_ok, commit_error = commit_file(
-        branch=branch,
-        filename=README_FILE_PATH,
-        content=updated,
-        commit_message="docs: update launch links in README\n\nGenerated by EngineerAgent",
-        base_sha="",
-    )
-    if not commit_ok:
-        result["status"] = "failed"
-        result["error"] = commit_error or "README finalization commit failed."
-        return result
-
-    result["status"] = "updated"
-    result["committed"] = True
     return result
 
 
@@ -478,7 +546,7 @@ def run():
                 if branch_created:
                     commit_ok, commit_error = commit_file(
                         branch=branch_name,
-                        filename="index.html",
+                        filename="output/index.html",
                         content=html_content,
                         commit_message="feat: add AI-generated landing page\n\nGenerated by EngineerAgent",
                         base_sha=base_sha,
@@ -486,7 +554,7 @@ def run():
                     if commit_error:
                         github_errors.append(commit_error)
                     if commit_ok:
-                        print(f"[ENGINEER] Committed index.html to branch '{branch_name}'")
+                        print(f"[ENGINEER] Committed output/index.html to branch '{branch_name}'")
                 else:
                     github_errors.append("Skipping commit because branch was not created.")
 

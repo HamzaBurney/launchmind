@@ -134,17 +134,20 @@ def main():
         print("⚠️ GitHub errors    :")
         for err in github_errors:
             print(f"   - {err}")
-    readme_update = eng.get("readme_update", {}) or {}
-    if readme_update:
-        print(f"✅ README update    : {readme_update.get('status', 'N/A')}")
-        readme_warnings = readme_update.get("warnings", []) or []
-        if readme_warnings:
-            print("⚠️ README warnings  :")
-            for warning in readme_warnings:
+    artifact_update = eng.get("artifact_update", {}) or eng.get("readme_update", {}) or {}
+    if artifact_update:
+        print(f"✅ Artifact update  : {artifact_update.get('status', 'N/A')}")
+        committed_files = artifact_update.get("committed_files", []) or []
+        if committed_files:
+            print(f"✅ Files committed  : {len(committed_files)}")
+        artifact_warnings = artifact_update.get("warnings", []) or []
+        if artifact_warnings:
+            print("⚠️ Artifact warnings:")
+            for warning in artifact_warnings:
                 print(f"   - {warning}")
-        readme_error = readme_update.get("error", "")
-        if readme_error:
-            print(f"⚠️ README error     : {readme_error}")
+        artifact_error = artifact_update.get("error", "")
+        if artifact_error:
+            print(f"⚠️ Artifact error   : {artifact_error}")
 
     mkt = results.get("marketing_result", {}) or {}
     print(f"✅ Tagline          : {mkt.get('tagline', 'N/A')}")

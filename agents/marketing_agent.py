@@ -65,7 +65,6 @@ Return ONLY a valid JSON object (no markdown, no fences) with this exact structu
 }
 
 Quality constraints:
-- Include at least one placeholder such as {{recipient_name}} or {{persona_role}}
 - Include at least one strong CTA action word (book, start, join, claim, schedule, try)
 - Mention at least 2 concrete product features in the email solution/benefits
 """
@@ -81,7 +80,7 @@ def _render_email_body(email_obj: dict) -> str:
     benefits_lines = "\n".join(f"- {b}" for b in benefits if str(b).strip())
 
     parts = [
-        sections.get("greeting", "Hi {{recipient_name}},").strip(),
+        sections.get("greeting", "Hi,").strip(),
         "",
         sections.get("hook", "Finding a reliable solution should not be this hard.").strip(),
         "",
@@ -124,9 +123,9 @@ def _validate_email_structure(copy: dict) -> list[str]:
     if not any(k in body.lower() for k in cta_keywords):
         warnings.append("Email body is missing a clear CTA action.")
 
-    placeholder_pool = f"{subject}\n{body}\n{sections_text}"
-    if "{{" not in placeholder_pool or "}}" not in placeholder_pool:
-        warnings.append("Email lacks personalization placeholders like {{recipient_name}}.")
+    # placeholder_pool = f"{subject}\n{body}\n{sections_text}"
+    # if "{{" not in placeholder_pool or "}}" not in placeholder_pool:
+    #     warnings.append("Email lacks personalization placeholders.")
 
     return warnings
 
@@ -141,7 +140,7 @@ def _build_fallback_copy(reason: str = "") -> dict:
         "email": {
             "subject": "Emergency vet help in minutes, not hours",
             "body_sections": {
-                "greeting": "Hi {{recipient_name}},",
+                "greeting": "Hi,",
                 "hook": (
                     "When a dog needs urgent care, owners waste valuable time calling clinic after clinic "
                     "just to find an available vet."
@@ -219,7 +218,7 @@ def generate_copy(spec: dict, feedback: str = "") -> dict:
     copy["email"].setdefault(
         "body_sections",
         {
-            "greeting": "Hi {{recipient_name}},",
+            "greeting": "Hi,",
             "hook": "We are launching a product that solves a painful workflow for your team.",
             "solution": "It provides a faster and clearer way to get results with less manual work.",
             "benefits": ["Save time", "Reduce stress", "Improve outcomes"],

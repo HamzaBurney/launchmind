@@ -224,5 +224,5 @@ After running, you'll find:
 
 These values are auto-updated after a successful publish run.
 
-- **GitHub PR (Engineer):** *(will be filled after first run)*
-- **Slack workspace:** *(add invite link here)*
+- **GitHub PR (Engineer):** [https://github.com/HamzaBurney/launchmind/pull/25](https://github.com/HamzaBurney/launchmind/pull/25)
+- **Slack workspace:** [https://join.slack.com/t/launchmindtalk/shared_invite/zt-3ucudhbnm-szzuxbhFVzK3dHu6lC~rLg](https://join.slack.com/t/launchmindtalk/shared_invite/zt-3ucudhbnm-szzuxbhFVzK3dHu6lC~rLg)

@@ -1,6 +1,6 @@
 # 🚀 LaunchMind – Multi-Agent Startup System
 
-LaunchMind is a fully autonomous Multi-Agent System (MAS) that takes a startup idea and runs it end-to-end: generating a product spec, building a real HTML landing page, committing it to GitHub, sending a cold outreach email, and posting a launch announcement to Slack — all without human intervention.
+LaunchMind is a fully autonomous Multi-Agent System (MAS) that takes a startup idea and runs it end-to-end: generating a product spec, iterating through draft improvements, QA-gating the output, and then publishing exactly once (GitHub issue/PR, email, Slack) only after QA pass.
 
 **Startup Idea (default):** *InvoiceHound* — A CLI tool that helps freelancers automatically track unpaid invoices, sends polite reminder emails on a schedule, and generates a monthly income report from the terminal.
 
@@ -45,11 +45,11 @@ LaunchMind is a fully autonomous Multi-Agent System (MAS) that takes a startup i
 
 | Agent | Role | Real-World Actions |
 |---|---|---|
-| **CEO** | Orchestrator | LLM task decomposition, output review, dynamic revision requests, final Slack summary |
+| **CEO** | Orchestrator | LLM task decomposition, draft-cycle orchestration, QA gate, one-time publish trigger |
 | **Product** | PM | Generates value prop, personas, features, user stories |
-| **Engineer** | Builder | Generates HTML, creates GitHub issue, commits to branch, opens PR |
-| **Marketing** | Growth | Generates tagline/email/social copy, sends email via Gmail API, posts to Slack |
-| **QA** | Reviewer | Reviews HTML + copy against spec, posts PR review comments, pass/fail verdict |
+| **Engineer** | Builder | Drafts HTML during revision cycles, then publishes once to GitHub after QA pass |
+| **Marketing** | Growth | Drafts copy during revision cycles, then sends one email and one Slack post after QA pass |
+| **QA** | Reviewer | Reviews HTML + copy each draft cycle, performs deterministic critical checks and score gates |
 
 ---
 
@@ -75,13 +75,15 @@ All messages are persisted to `logs/message_bus.json` at runtime.
 
 ---
 
-## 🔄 Dynamic Decision-Making
+## 🔄 Execution Model
 
-The CEO agent demonstrates autonomous decision-making in two ways:
+LaunchMind now uses a **draft → QA gate → publish once** model:
 
-1. **Product spec review**: After receiving the Product agent's spec, the CEO uses an LLM to evaluate whether it is specific enough. If not, it sends a `revision_request` with targeted feedback before proceeding.
-
-2. **QA-triggered Engineer revision**: If the QA agent returns a `fail` verdict, the CEO instructs the Engineer agent to revise the HTML, addressing the specific issues raised — creating a real feedback loop.
+1. **Product loop**: CEO reviews Product output and can request revisions.
+2. **Draft loop (up to 4 cycles)**: Engineer and Marketing run in draft mode with **no external side effects**.
+3. **QA gate**: QA evaluates draft HTML + copy using critical checks and score thresholds.
+4. **Publish once**: Only when QA passes, CEO triggers one publish call for Engineer (Issue + PR) and one publish call for Marketing (Email + Slack).
+5. **Fail-safe**: If QA does not pass within the draft limit, publish is skipped entirely.
 
 ---
 
@@ -116,6 +118,7 @@ Optional model overrides:
 Optional (enables real integrations):
 - `GITHUB_TOKEN` + `GITHUB_REPO` — GitHub PAT with `repo` and `workflow` scopes
 - `SLACK_BOT_TOKEN` — Slack Bot token (`xoxb-...`)
+- `SLACK_WORKSPACE_INVITE_URL` — public Slack workspace invite link used to auto-update README links after publish
 - `GMAIL_CREDENTIALS_FILE` + `GMAIL_TOKEN_FILE` + `EMAIL_FROM` + `EMAIL_TO` — Gmail API credentials
 
 ### 3. Platform setup
@@ -140,6 +143,7 @@ If GitHub issue/PR creation is not happening, check:
 2. Add scopes: `chat:write`, `channels:read`, `channels:join`
 3. Install to workspace, copy `xoxb-` token
 4. Create `#launches` channel, invite the bot
+5. Create a workspace invite link and set `SLACK_WORKSPACE_INVITE_URL` in `.env`
 
 **Gmail API (OAuth Desktop):**
 1. Open [Google Cloud Console](https://console.cloud.google.com)
@@ -166,6 +170,9 @@ python main.py
 
 # Custom startup idea
 python main.py --idea "A mobile app that helps dog owners find nearby vets with real-time availability"
+
+# Product-loop revisions only (draft loop remains fixed at 4 cycles)
+python main.py --idea "Your idea" --max-revisions 0
 ```
 
 ---
@@ -181,12 +188,13 @@ launchmind/
 ├── .gitignore               # Excludes .env from commits
 ├── README.md
 └── agents/
-  ├── llm_client.py        # Shared OpenAI-compatible client (OpenAI + Groq)
+    ├── llm_client.py        # Shared OpenAI-compatible client (OpenAI + Groq + Gemini)
     ├── ceo_agent.py         # Orchestrator with LLM review + dynamic routing
     ├── product_agent.py     # Product spec generation
-    ├── engineer_agent.py    # HTML generation + GitHub API
-    ├── marketing_agent.py   # Copy generation + Gmail API + Slack
-    └── qa_agent.py          # HTML/copy review + GitHub PR comments
+    ├── engineer_agent.py    # Draft HTML + one-time GitHub publish
+    ├── marketing_agent.py   # Draft copy + one-time Gmail/Slack publish
+    ├── qa_agent.py          # Deterministic QA gate with critical checks
+    └── gmail_client.py      # Gmail API OAuth helper
 ```
 
 ---
@@ -196,9 +204,9 @@ launchmind/
 | Platform | What the agent does |
 |---|---|
 | **OpenAI / Groq / Gemini APIs** | All 5 agents use a shared OpenAI-compatible LLM client. Provider is selected with `LLM_PROVIDER`. |
-| **GitHub** | Engineer creates issue, commits `index.html` to a branch, opens PR. QA posts inline review comments. |
-| **Slack** | Marketing posts a Block Kit launch announcement to `#launches`. CEO posts a final summary. |
-| **Gmail API** | Marketing sends a cold outreach email to a test inbox. |
+| **GitHub** | Engineer publishes once after QA pass: creates one issue, commits `index.html`, opens one PR, then commits `README.md` with final links on the same branch. |
+| **Slack** | Marketing publishes one Block Kit launch announcement to `#launches` after QA pass. |
+| **Gmail API** | Marketing sends one outreach email after QA pass. |
 
 ---
 
@@ -214,22 +222,7 @@ After running, you'll find:
 
 ## 🔗 Links
 
-- **GitHub PR (Engineer):** *(will be filled after first run)*
-- **Slack workspace:** *(add invite link here)*
+These values are auto-updated after a successful publish run.
 
----
-
-## ❓ FAQ
-
-**Q: Can I run without GitHub/Slack/Gmail API?**
-Yes. Set only the selected LLM provider key (for example `OPENAI_API_KEY` when `LLM_PROVIDER=openai`, `GROQ_API_KEY` when `LLM_PROVIDER=groq`, or `GEMINI_API_KEY` when `LLM_PROVIDER=gemini`). The system will still generate all content locally and save `output/index.html` — it just won't perform real-world actions.
-
-**Q: How do I show the full message history in the demo?**
-```bash
-cat logs/message_bus.json | python -m json.tool
-```
-
-**Q: How do I change the startup idea?**
-```bash
-python main.py --idea "Your idea here"
-```
+- **GitHub PR (Engineer):** [https://github.com/HamzaBurney/launchmind/pull/13](https://github.com/HamzaBurney/launchmind/pull/13)
+- **Slack workspace:** [https://join.slack.com/t/launchmindtalk/shared_invite/zt-3ucudhbnm-szzuxbhFVzK3dHu6lC~rLg](https://join.slack.com/t/launchmindtalk/shared_invite/zt-3ucudhbnm-szzuxbhFVzK3dHu6lC~rLg)

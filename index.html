@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CampusBook – Student Textbook Marketplace</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    :root {
+      --primary: #0d6efd;
+      --primary-dark: #0a58ca;
+      --bg-gradient: linear-gradient(135deg, #1e3c72, #2a5298);
+      --bg-light: #f8fafc;
+      --text-dark: #212529;
+      --text-light: #ffffff;
+      --card-bg: #ffffff;
+      --card-shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: var(--bg-light);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      background: var(--bg-gradient);
+      color: var(--text-light);
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    header p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: var(--primary);
+      color: var(--text-light);
+      padding: 0.8rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 12px var(--card-shadow);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .cta-button:hover,
+    .cta-button:focus {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    main {
+      padding: 2rem 1.5rem;
+    }
+
+    .features {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features h2 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px var(--card-shadow);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    @media (min-width: 600px) {
+      header h1 {
+        font-size: 2.6rem;
+      }
+      header p {
+        font-size: 1.1rem;
+      }
+      .feature-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .feature-list {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    footer {
+      background: var(--text-dark);
+      color: var(--text-light);
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Buy &amp; Sell Textbooks Instantly on Campus</h1>
+    <p>A mobile‑first marketplace that lets university students quickly list, discover, and buy second‑hand textbooks, saving money and reducing campus waste.</p>
+    <a href="#" class="cta-button">Get Early Access</a>
+  </header>
+
+  <main>
+    <section class="features">
+      <h2>Key Features</h2>
+      <div class="feature-list">
+        <div class="feature-card">
+          <h3>Instant Listing Creation</h3>
+          <p>Enter ISBN or scan barcode; the system auto‑populates title, edition, and cover image. Add condition, price, photos, and optional boost. Validation ensures required fields with a 30‑second max response time.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Smart Search &amp; Filter</h3>
+          <p>Full‑text search with filters for course code, ISBN, price range, condition, and proximity to campus. Results load within 200 ms for up to 10 k listings, with pagination and caching.</p>
+        </div>
+        <div class="feature-card">
+          <h3>In‑App Messaging &amp; Transaction Flow</h3>
+          <p>Secure chat starts automatically when a buyer clicks “Contact Seller”. Integrated PCI‑DSS‑compliant Stripe payment with escrow; funds released after buyer confirms receipt. Includes timeout handling and automated dispute tickets.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Rating &amp; Trust System</h3>
+          <p>After each transaction, both parties rate each other 1‑5 stars with optional feedback. Seller rating influences search ranking. Listings dropping below 1‑star trigger admin review.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Admin Console &amp; Moderation Tools</h3>
+          <p>Role‑based UI for reviewing flagged listings, managing bans, viewing audit logs (90‑day retention), and generating weekly compliance reports. Bulk actions and AI‑assisted fraud detection flags.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 CampusBook
+  </footer>
+</body>
+</html>

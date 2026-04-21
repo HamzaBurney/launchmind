@@ -3,177 +3,227 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>JobEase - AI Automated Job Search & Application</title>
+<title>VetFinder - Find & Book Nearby Vets</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
   :root {
-    --clr-primary: #5a67d8;
-    --clr-primary-light: #7f94e8;
-    --clr-primary-dark: #3e4db7;
-    --clr-gradient-start: #6b46c1;
-    --clr-gradient-end: #9f7aea;
-    --clr-bg: #f9fafb;
-    --clr-text: #2d3748;
-    --clr-text-light: #718096;
-    --clr-white: #fff;
-    --border-radius: 10px;
-    --shadow-light: 0 4px 15px rgba(101, 89, 183, 0.2);
-    --shadow-hover: 0 8px 30px rgba(101, 89, 183, 0.35);
+    --primary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --primary-color: #00aaff;
+    --accent-color: #ff7a59;
+    --dark-bg: #0d1b2a;
+    --light-bg: #f7f9fc;
+    --text-dark: #222;
+    --text-light: #fafafa;
+    --shadow: rgba(0, 0, 0, 0.15);
   }
 
   * {
     box-sizing: border-box;
   }
+
   body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: var(--clr-bg);
-    color: var(--clr-text);
+    background: var(--light-bg);
+    color: var(--text-dark);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
   header {
-    background: linear-gradient(135deg, var(--clr-gradient-start), var(--clr-gradient-end));
-    color: var(--clr-white);
+    background: var(--primary-gradient);
+    color: white;
     text-align: center;
     padding: 4rem 1.5rem 3rem;
-    box-shadow: var(--shadow-light);
+    box-shadow: 0 10px 20px var(--shadow);
   }
+
   header h1 {
+    font-size: 2rem;
     font-weight: 700;
-    font-size: 2.25rem;
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
+
   header p {
     font-weight: 500;
+    max-width: 460px;
+    margin: 0 auto 2.5rem;
     font-size: 1.125rem;
-    margin-top: 1rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    color: rgba(255 255 255 / 0.85);
-    text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    opacity: 0.9;
   }
+
+  .cta-button {
+    display: inline-block;
+    background: var(--accent-color);
+    color: white;
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding: 0.85rem 2.5rem;
+    border-radius: 36px;
+    box-shadow: 0 6px 14px rgb(255 122 89 / 0.5);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .cta-button:hover,
+  .cta-button:focus {
+    background: #ff5e33;
+    box-shadow: 0 8px 20px rgb(255 94 51 / 0.7);
+    outline: none;
+  }
+
   main {
-    max-width: 940px;
-    margin: 3rem auto 4rem;
-    padding: 0 1rem;
+    max-width: 900px;
+    margin: 3rem auto 5rem;
+    padding: 0 1.25rem;
   }
+
   section.features {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px var(--shadow);
+    padding: 2rem 2rem 2.5rem;
   }
-  @media(min-width: 600px) {
-    section.features {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3rem 2.5rem;
-    }
+
+  section.features h2 {
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--primary-color);
   }
-  @media(min-width: 900px) {
-    section.features {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3.5rem 2.5rem;
-    }
-  }
-  .feature {
-    background: var(--clr-white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-light);
-    padding: 1.75rem 1.5rem 2rem;
-    transition: box-shadow 0.3s ease;
-  }
-  .feature:hover,
-  .feature:focus-within {
-    box-shadow: var(--shadow-hover);
-  }
-  .feature h3 {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    font-size: 1.25rem;
-    color: var(--clr-primary-dark);
-  }
-  .feature p {
+
+  ul.features-list {
+    list-style: none;
+    padding: 0;
     margin: 0;
-    color: var(--clr-text-light);
+  }
+
+  li.feature-item {
+    border-bottom: 1px solid #e3e8f0;
+    padding: 1.25rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  li.feature-item:last-child {
+    border-bottom: none;
+  }
+
+  li.feature-item strong {
+    font-size: 1.15rem;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+  }
+
+  li.feature-item p {
+    margin: 0;
+    color: #555a6e;
     font-size: 1rem;
     line-height: 1.4;
   }
-  .cta-container {
+
+  footer {
     text-align: center;
-    margin-top: 4rem;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--clr-gradient-start), var(--clr-gradient-end));
-    border: none;
-    color: var(--clr-white);
-    padding: 1rem 2.5rem;
-    font-size: 1.25rem;
-    font-weight: 700;
-    border-radius: 9999px;
-    cursor: pointer;
-    box-shadow: var(--shadow-light);
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    display: inline-block;
+    padding: 2rem 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    border-top: 1px solid #e3e8f0;
     user-select: none;
   }
-  .btn-primary:hover,
-  .btn-primary:focus-visible {
-    background: linear-gradient(135deg, var(--clr-primary-dark), var(--clr-primary));
-    box-shadow: var(--shadow-hover);
-    outline: none;
-    transform: translateY(-2px);
+
+  /* Responsive - Mobile first */
+
+  @media (min-width: 600px) {
+    header h1 {
+      font-size: 2.8rem;
+      max-width: 700px;
+    }
+
+    header p {
+      font-size: 1.25rem;
+      max-width: 580px;
+    }
+
+    section.features {
+      padding: 2.5rem 3rem 3rem;
+    }
+
+    li.feature-item {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 0;
+    }
+
+    li.feature-item strong {
+      font-size: 1.25rem;
+      max-width: 180px;
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+
+    li.feature-item p {
+      font-size: 1.1rem;
+      color: #4a4f63;
+      max-width: 680px;
+      margin-left: 1.25rem;
+    }
   }
-  footer {
-    background: #2d3748;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    color: #a0aec0;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
+
+  @media (min-width: 900px) {
+    main {
+      margin: 4rem auto 6rem;
+      padding: 0 2rem;
+    }
   }
 </style>
 </head>
 <body>
 <header>
-  <h1>An Automated Platform That Streamlines Job Searching and Application Processes</h1>
-  <p>Use AI to find, customize, and submit relevant job opportunities efficiently, designed for every job seeker.</p>
+  <h1>Find, Book, and Get Real-Time Availability Updates for Nearby Veterinarians</h1>
+  <p>A mobile app designed to help dog owners quickly locate and book vets with live appointment updates — no stress, just care.</p>
+  <a href="#" class="cta-button" aria-label="Get Early Access to VetFinder App">Get Early Access</a>
 </header>
 <main>
   <section class="features" aria-label="Product Features">
-    <article class="feature" tabindex="0">
-      <h3>Automated Job Matching Engine</h3>
-      <p>Uses AI to scan thousands of job boards and company postings to identify roles that match user skills, experience, and preferences.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>Resume and Cover Letter Customization</h3>
-      <p>Automatically tailors resumes and cover letters based on each job description to improve application relevance and success.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>One-Click Application Submission</h3>
-      <p>Allows users to submit applications directly through the platform to multiple job postings with minimal manual input.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>Applicant Tracking Dashboard</h3>
-      <p>Provides users with real-time updates on application status, interview invites, and follow-up reminders.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>Skill Gap Analysis & Recommendations</h3>
-      <p>Analyzes user profiles against desired roles, suggesting courses or certifications to enhance employability in target industries.</p>
-    </article>
+    <h2>Features</h2>
+    <ul class="features-list">
+      <li class="feature-item">
+        <strong>Vet Search by Location</strong>
+        <p>Allows users to find veterinary clinics nearby by leveraging GPS and location filters such as distance and specialty.</p>
+      </li>
+      <li class="feature-item">
+        <strong>Real-Time Availability Updates</strong>
+        <p>Displays real-time appointment availability from vets’ calendars, updating dynamically to show open slots or busy times.</p>
+      </li>
+      <li class="feature-item">
+        <strong>Booking Functionality</strong>
+        <p>Enables users to book appointments directly within the app with confirmation notifications and calendar integration.</p>
+      </li>
+      <li class="feature-item">
+        <strong>User Profiles</strong>
+        <p>Stores pet information, past appointments, and user preferences to streamline future bookings and personalized recommendations.</p>
+      </li>
+      <li class="feature-item">
+        <strong>Vet Clinic Profiles with Reviews and Ratings</strong>
+        <p>Provides detailed information about each vet clinic including services offered, user reviews, photos, and ratings to help user decision-making.</p>
+      </li>
+    </ul>
   </section>
-  <div class="cta-container">
-    <a href="#" class="btn-primary" role="button">Get Early Access</a>
-  </div>
 </main>
 <footer>
-  JobEase
+  VetFinder
 </footer>
 </body>
 </html>

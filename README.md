@@ -225,8 +225,8 @@ After running, you'll find:
 These values are auto-updated after a successful publish run.
 
 <<<<<<< HEAD
-- **GitHub PR (Engineer):** [https://github.com/HamzaBurney/launchmind/pull/33](https://github.com/HamzaBurney/launchmind/pull/33)
+- **GitHub PR (Engineer):** [https://github.com/HamzaBurney/launchmind/pull/35](https://github.com/HamzaBurney/launchmind/pull/35)
 =======
-- **GitHub PR (Engineer):** [https://github.com/HamzaBurney/launchmind/pull/25](https://github.com/HamzaBurney/launchmind/pull/25)
+- **GitHub PR (Engineer):** [https://github.com/HamzaBurney/launchmind/pull/35](https://github.com/HamzaBurney/launchmind/pull/35)
 >>>>>>> 7623cf04671e8e8b735e0425d76b9779b9501bf7
 - **Slack workspace:** [https://join.slack.com/t/launchmindtalk/shared_invite/zt-3ucudhbnm-szzuxbhFVzK3dHu6lC~rLg](https://join.slack.com/t/launchmindtalk/shared_invite/zt-3ucudhbnm-szzuxbhFVzK3dHu6lC~rLg)

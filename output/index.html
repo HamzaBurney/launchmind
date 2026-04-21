@@ -1,179 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>JobEase - AI Automated Job Search & Application</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-  :root {
-    --clr-primary: #5a67d8;
-    --clr-primary-light: #7f94e8;
-    --clr-primary-dark: #3e4db7;
-    --clr-gradient-start: #6b46c1;
-    --clr-gradient-end: #9f7aea;
-    --clr-bg: #f9fafb;
-    --clr-text: #2d3748;
-    --clr-text-light: #718096;
-    --clr-white: #fff;
-    --border-radius: 10px;
-    --shadow-light: 0 4px 15px rgba(101, 89, 183, 0.2);
-    --shadow-hover: 0 8px 30px rgba(101, 89, 183, 0.35);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PawClinic – Instant Vet Booking</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: var(--clr-bg);
-    color: var(--clr-text);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  header {
-    background: linear-gradient(135deg, var(--clr-gradient-start), var(--clr-gradient-end));
-    color: var(--clr-white);
-    text-align: center;
-    padding: 4rem 1.5rem 3rem;
-    box-shadow: var(--shadow-light);
-  }
-  header h1 {
-    font-weight: 700;
-    font-size: 2.25rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  }
-  header p {
-    font-weight: 500;
-    font-size: 1.125rem;
-    margin-top: 1rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    color: rgba(255 255 255 / 0.85);
-    text-shadow: 0 1px 4px rgba(0,0,0,0.25);
-  }
-  main {
-    max-width: 940px;
-    margin: 3rem auto 4rem;
-    padding: 0 1rem;
-  }
-  section.features {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  @media(min-width: 600px) {
-    section.features {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3rem 2.5rem;
+    :root {
+      --primary: #ff6f61;
+      --primary-dark: #e65b50;
+      --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      --text-dark: #2d2d2d;
+      --text-light: #ffffff;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --radius: 8px;
     }
-  }
-  @media(min-width: 900px) {
-    section.features {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3.5rem 2.5rem;
+
+    * { box-sizing: border-box; margin:0; padding:0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: #f9fafb;
     }
-  }
-  .feature {
-    background: var(--clr-white);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-light);
-    padding: 1.75rem 1.5rem 2rem;
-    transition: box-shadow 0.3s ease;
-  }
-  .feature:hover,
-  .feature:focus-within {
-    box-shadow: var(--shadow-hover);
-  }
-  .feature h3 {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-    font-size: 1.25rem;
-    color: var(--clr-primary-dark);
-  }
-  .feature p {
-    margin: 0;
-    color: var(--clr-text-light);
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-  .cta-container {
-    text-align: center;
-    margin-top: 4rem;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--clr-gradient-start), var(--clr-gradient-end));
-    border: none;
-    color: var(--clr-white);
-    padding: 1rem 2.5rem;
-    font-size: 1.25rem;
-    font-weight: 700;
-    border-radius: 9999px;
-    cursor: pointer;
-    box-shadow: var(--shadow-light);
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    display: inline-block;
-    user-select: none;
-  }
-  .btn-primary:hover,
-  .btn-primary:focus-visible {
-    background: linear-gradient(135deg, var(--clr-primary-dark), var(--clr-primary));
-    box-shadow: var(--shadow-hover);
-    outline: none;
-    transform: translateY(-2px);
-  }
-  footer {
-    background: #2d3748;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    color: #a0aec0;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-  }
-</style>
+
+    header {
+      background: var(--bg-gradient);
+      color: var(--text-light);
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+
+    h2 {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      font-weight: 400;
+      opacity: .9;
+    }
+
+    .cta {
+      margin-top: 2rem;
+    }
+
+    .cta a {
+      display: inline-block;
+      background: var(--primary);
+      color: var(--text-light);
+      padding: .75rem 1.5rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: background .3s;
+    }
+
+    .cta a:hover {
+      background: var(--primary-dark);
+    }
+
+    main {
+      padding: 2rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-card h3 {
+      margin-bottom: .5rem;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .feature-card p {
+      font-size: .95rem;
+      opacity: .85;
+    }
+
+    @media (min-width: 600px) {
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    footer {
+      background: var(--text-dark);
+      color: var(--text-light);
+      text-align: center;
+      padding: 1rem;
+      font-size: .9rem;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>An Automated Platform That Streamlines Job Searching and Application Processes</h1>
-  <p>Use AI to find, customize, and submit relevant job opportunities efficiently, designed for every job seeker.</p>
-</header>
-<main>
-  <section class="features" aria-label="Product Features">
-    <article class="feature" tabindex="0">
-      <h3>Automated Job Matching Engine</h3>
-      <p>Uses AI to scan thousands of job boards and company postings to identify roles that match user skills, experience, and preferences.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>Resume and Cover Letter Customization</h3>
-      <p>Automatically tailors resumes and cover letters based on each job description to improve application relevance and success.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>One-Click Application Submission</h3>
-      <p>Allows users to submit applications directly through the platform to multiple job postings with minimal manual input.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>Applicant Tracking Dashboard</h3>
-      <p>Provides users with real-time updates on application status, interview invites, and follow-up reminders.</p>
-    </article>
-    <article class="feature" tabindex="0">
-      <h3>Skill Gap Analysis & Recommendations</h3>
-      <p>Analyzes user profiles against desired roles, suggesting courses or certifications to enhance employability in target industries.</p>
-    </article>
-  </section>
-  <div class="cta-container">
-    <a href="#" class="btn-primary" role="button">Get Early Access</a>
-  </div>
-</main>
-<footer>
-  JobEase
-</footer>
+  <header>
+    <h1>Instant Vet Booking for Dog Owners – Nearby Clinics, Real‑Time Slots, One Tap</h1>
+    <h2>Find and book the closest veterinary appointment instantly, right from your phone.</h2>
+    <div class="cta">
+      <a href="#signup">Get Early Access</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="features">
+      <div class="feature-card">
+        <h3>Location‑Based Vet Search</h3>
+        <p>Geocode the user’s position, list clinics within a configurable radius, and filter by services and ratings.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Real‑Time Availability Feed</h3>
+        <p>Sync with clinic scheduling systems (via API or iCal) to show live open slots for each vet.</p>
+      </div>
+      <div class="feature-card">
+        <h3>In‑App Appointment Booking</h3>
+        <p>Allow users to select a slot, confirm with pet details, and receive a digital confirmation.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Reviews &amp; Ratings</h3>
+        <p>Authenticated owners can rate clinics and leave feedback; ratings influence search ranking.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Push Notifications &amp; Reminders</h3>
+        <p>Notify users of upcoming appointments, slot cancellations, or new openings near them.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 PawClinic
+  </footer>
 </body>
 </html>

@@ -3,139 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Campus TextSwap – Trusted Peer‑to‑Peer Textbook Marketplace</title>
-  <meta name="description" content="A trusted peer‑to‑peer marketplace that lets college students quickly list, discover, and buy second‑hand textbooks, cutting costs and campus waste.">
+  <title>PawVet – Instant Vet Appointments</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
     :root {
-      --primary: #4a90e2;
-      --primary-dark: #357ab8;
-      --bg-light: #f9fafb;
-      --text-dark: #1a202c;
-      --text-muted: #4a5568;
+      --primary: #ff6f61;
+      --primary-dark: #e6554d;
+      --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      --text: #212529;
+      --muted: #6c757d;
       --card-bg: #ffffff;
-      --shadow: rgba(0,0,0,0.1);
+      --shadow: rgba(0, 0, 0, 0.1);
     }
 
-    *, *::before, *::after {
+    * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: 'Inter', sans-serif;
-      background: var(--bg-light);
-      color: var(--text-dark);
+      color: var(--text);
+      background: var(--bg-gradient);
       line-height: 1.6;
-    }
-
-    a {
-      color: var(--primary);
-      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
       padding: 2rem 1rem;
       text-align: center;
     }
 
-    header h1 {
-      margin: 0 0 0.5rem;
+    h1 {
       font-size: 2rem;
       font-weight: 700;
+      margin-bottom: 0.5rem;
     }
 
-    header p {
-      margin: 0 0 1.5rem;
-      font-size: 1rem;
-      opacity: 0.9;
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .cta-btn {
-      display: inline-block;
+    .cta {
+      margin-top: 1.5rem;
+    }
+
+    .cta button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
       padding: 0.75rem 1.5rem;
-      background: #fff;
-      color: var(--primary);
+      font-size: 1rem;
       font-weight: 600;
       border-radius: 0.5rem;
+      cursor: pointer;
       box-shadow: 0 4px 12px var(--shadow);
-      transition: background 0.3s, transform 0.2s;
+      transition: background 0.3s ease;
     }
 
-    .cta-btn:hover {
-      background: #f0f4f8;
-      transform: translateY(-2px);
+    .cta button:hover {
+      background: var(--primary-dark);
     }
 
-    main {
+    .features {
+      padding: 2rem 1rem;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-
-    #features {
-      margin-top: 3rem;
-    }
-
-    #features h2 {
-      text-align: center;
-      font-size: 1.75rem;
-      margin-bottom: 2rem;
-    }
-
-    .feature-list {
       display: grid;
-      gap: 1.5rem;
       grid-template-columns: 1fr;
+      gap: 1.5rem;
     }
 
     .feature-card {
       background: var(--card-bg);
-      padding: 1.5rem;
       border-radius: 0.75rem;
-      box-shadow: 0 2px 8px var(--shadow);
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
     }
 
     .feature-card h3 {
-      margin-top: 0;
-      margin-bottom: 0.5rem;
       font-size: 1.25rem;
-      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      color: var(--primary);
     }
 
     .feature-card p {
-      margin: 0;
-      color: var(--text-muted);
-      white-space: pre-line;
+      font-size: 0.95rem;
+      color: var(--muted);
     }
 
     footer {
-      background: var(--text-dark);
-      color: #fff;
-      text-align: center;
+      margin-top: auto;
+      background: #fff;
       padding: 1rem;
-      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--muted);
+      box-shadow: 0 -2px 8px var(--shadow);
     }
 
     @media (min-width: 600px) {
-      header h1 {
+      h1 {
         font-size: 2.5rem;
       }
-
-      header p {
-        font-size: 1.125rem;
+      h2 {
+        font-size: 1.4rem;
       }
-
-      .feature-list {
+      .features {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (min-width: 900px) {
-      .feature-list {
+      .features {
         grid-template-columns: repeat(3, 1fr);
       }
     }
@@ -143,43 +136,38 @@
 </head>
 <body>
   <header>
-    <h1>Trusted Peer‑to‑Peer Marketplace for College Students to List, Discover &amp; Buy Second‑Hand Textbooks</h1>
-    <p>Cut costs, reduce campus waste, and get the books you need fast.</p>
-    <a href="#signup" class="cta-btn">Get Early Access</a>
+    <h1>Dog owners instantly locate nearby veterinary clinics, book real‑time appointment slots and get navigation reminders</h1>
+    <h2>All in one mobile app – find, schedule, and never miss a vet visit again.</h2>
+    <div class="cta">
+      <button>Get Early Access</button>
+    </div>
   </header>
 
-  <main>
-    <section id="features">
-      <h2>Features</h2>
-      <div class="feature-list">
-        <div class="feature-card">
-          <h3>Listings &amp; Pricing Engine</h3>
-          <p>Create, edit, and expire textbook listings; AI‑driven price‑suggestion based on ISBN, condition, and recent market data; automatic expiration after 30 days with optional renewal.
-Non‑functional: supports 5 k concurrent listing edits, data stored encrypted at rest.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Search &amp; Discovery</h3>
-          <p>Full‑text search by ISBN, title, author, and filters (campus, price, condition). Results delivered &lt;200 ms latency; cached for peak enrollment spikes.
-Scalable to 20 k simultaneous queries.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Messaging &amp; Notifications</h3>
-          <p>In‑app real‑time chat, push‑notifications, email &amp; SMS alerts for new offers, messages, and transaction status changes. GDPR‑compliant opt‑out handling.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Payments &amp; Escrow</h3>
-          <p>Stripe integration for credit/debit cards and ACH; platform holds buyer payment in escrow, releases to seller after confirmed receipt. Commission 8 % + $0.30 per transaction; dispute workflow with 48‑hour resolution window.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Admin &amp; Analytics Dashboard</h3>
-          <p>Moderator tools to flag/invalidate listings, manage disputes, and monitor fraud patterns. KPI widgets: listings/week, conversion rate, avg. time‑to‑sale, churn. Exportable CSV reports. SLA: 99.9 % uptime.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+  <section class="features">
+    <div class="feature-card">
+      <h3>Geolocation‑Based Clinic Search</h3>
+      <p>Shows a list and map of veterinary clinics within a user‑defined radius (default 10 mi). Search results returned ≥2 seconds, with cached fallback and GDPR‑compliant consent.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Live Availability Feed</h3>
+      <p>Aggregates real‑time slot data from clinic APIs or manual uploads. Updates within 30 seconds, encrypted TLS 1.3, 99% uptime, <1% error rate.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Booking Workflow</h3>
+      <p>Select a slot, confirm pet details, and receive instant confirmation. Transaction completes in ≤3 seconds, supports up to 3 pets per booking.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Clinic Profiles with Ratings & Services</h3>
+      <p>Detailed pages with address, services, hours, ratings, and pricing. Loads ≤1.5 seconds on 3G, WCAG 2.1 AA compliant.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Push Notifications & Reminders</h3>
+      <p>Instant confirmations, 24‑hour reminders, and post‑visit follow‑ups. Latency ≤1 minute, open rate ≥70%, reduces no‑shows by ≥15%.</p>
+    </div>
+  </section>
 
   <footer>
-    © 2026 Campus TextSwap
+    © 2026 PawVet
   </footer>
 </body>
 </html>

@@ -1,6 +1,6 @@
 """
 agents/product_agent.py
-Product Agent – generates a structured product specification.
+Product Agent - generates a structured product specification.
 
 Inputs : task message from CEO (in bus inbox)
 Outputs: product spec JSON → Engineer & Marketing agents
@@ -118,7 +118,7 @@ def run():
     messages = bus.receive("product")
 
     if not messages:
-        print("[PRODUCT] No messages in inbox – nothing to do.")
+        print("[PRODUCT] No messages in inbox - nothing to do.")
         return
 
     # Process the latest task or revision_request

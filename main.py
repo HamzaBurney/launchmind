@@ -119,6 +119,17 @@ def main():
     print("─" * 60)
     print(f"✅ Startup idea     : {results['idea'][:80]}")
     print(f"✅ Workflow status  : {results.get('workflow_status', 'N/A')}")
+
+    if results.get("workflow_status") == "terminated_irrelevant_idea":
+        print(f"⚠️ Termination reason: {results.get('termination_reason', 'Idea considered irrelevant.')}")
+        print("✅ Safe shutdown    : No downstream agents were executed")
+        print("\n📁 Artifacts saved:")
+        print("   logs/ceo_decisions.json  — CEO decision log")
+        print("   logs/message_bus.json    — Full agent message history")
+        print("\n" + "─" * 60)
+        print("LaunchMind MAS stopped safely.")
+        return
+
     print(f"✅ Draft attempts   : {results.get('draft_attempts_used', 'N/A')}")
     print(f"✅ Published once   : {results.get('publish_executed', False)}")
 

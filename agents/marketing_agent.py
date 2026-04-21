@@ -1,6 +1,6 @@
 """
 agents/marketing_agent.py
-Marketing Agent – generates copy, sends a real email, posts to Slack.
+Marketing Agent - generates copy, sends a real email, posts to Slack.
 
 Real actions:
     - Sends email via Gmail API
@@ -38,7 +38,7 @@ Given a product specification, produce marketing copy.
 Return ONLY a valid JSON object (no markdown, no fences) with this exact structure:
 
 {
-  "tagline": "Under 10 words – punchy and memorable",
+  "tagline": "Under 10 words - punchy and memorable",
   "short_description": "2-3 sentences suitable for a landing page hero section",
   "email": {
         "subject": "Compelling benefit-driven subject line (20-70 chars)",
@@ -251,7 +251,7 @@ def generate_copy(spec: dict, feedback: str = "") -> dict:
 # ---------------------------------------------------------------------------
 def send_email(subject: str, body: str, to_email: str) -> bool:
     if not to_email:
-        print("[MARKETING] EMAIL_TO not set – skipping email send.")
+        print("[MARKETING] EMAIL_TO not set - skipping email send.")
         return False
 
     return send_email_via_gmail(
@@ -267,7 +267,7 @@ def send_email(subject: str, body: str, to_email: str) -> bool:
 # ---------------------------------------------------------------------------
 def post_slack_block_kit(blocks: list, channel: str = "#launches") -> bool:
     if not SLACK_BOT_TOKEN:
-        print("[MARKETING] SLACK_BOT_TOKEN not set – skipping Slack post.")
+        print("[MARKETING] SLACK_BOT_TOKEN not set - skipping Slack post.")
         return False
     try:
         resp = requests.post(
@@ -326,10 +326,10 @@ def run():
     messages = bus.receive("marketing")
 
     if not messages:
-        print("[MARKETING] No messages in inbox – nothing to do.")
+        print("[MARKETING] No messages in inbox - nothing to do.")
         return
 
-    # Collect the latest task/revision from CEO (may have multiple messages – take last)
+    # Collect the latest task/revision from CEO (may have multiple messages - take last)
     relevant = [m for m in messages if m["message_type"] in ("task", "revision_request", "result")]
     if not relevant:
         print("[MARKETING] No relevant messages.")
@@ -372,7 +372,7 @@ def run():
         )
         slack_sent = post_slack_block_kit(blocks, channel="#launches")
     else:
-        print("[MARKETING] Draft mode – skipping email and Slack publishing.")
+        print("[MARKETING] Draft mode - skipping email and Slack publishing.")
 
     # 4. Report back to CEO
     bus.send(

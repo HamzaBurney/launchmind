@@ -1,6 +1,6 @@
 """
 agents/engineer_agent.py
-Engineer Agent – generates HTML landing page and interacts with GitHub.
+Engineer Agent - generates HTML landing page and interacts with GitHub.
 
 Real actions:
   - Creates a GitHub issue
@@ -237,7 +237,7 @@ def create_branch(branch_name: str, sha: str) -> tuple[bool, str | None]:
         "sha": sha,
     })
     if resp.status_code == 422:
-        print(f"[ENGINEER] Branch '{branch_name}' already exists – will use it.")
+        print(f"[ENGINEER] Branch '{branch_name}' already exists - will use it.")
         return True, None
     if not resp.ok:
         return False, _response_error(resp, f"Create branch '{branch_name}'")
@@ -471,7 +471,7 @@ def run():
     messages = bus.receive("engineer")
 
     if not messages:
-        print("[ENGINEER] No messages in inbox – nothing to do.")
+        print("[ENGINEER] No messages in inbox - nothing to do.")
         return
 
     # Use the most recent task/revision message from CEO
@@ -584,7 +584,7 @@ def run():
                 github_errors.append(f"Unexpected GitHub operation failure: {e}")
                 github_status = "github_failed"
     else:
-        print("[ENGINEER] Draft mode – skipping GitHub publishing.")
+        print("[ENGINEER] Draft mode - skipping GitHub publishing.")
 
     if github_errors:
         print("[ENGINEER] GitHub step warnings/errors:")

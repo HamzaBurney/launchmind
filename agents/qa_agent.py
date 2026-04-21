@@ -1,6 +1,6 @@
 """
 agents/qa_agent.py
-QA / Reviewer Agent – reviews Engineer HTML and Marketing copy,
+QA / Reviewer Agent - reviews Engineer HTML and Marketing copy,
 posts inline PR review comments on GitHub, returns structured report to CEO.
 """
 
@@ -300,7 +300,7 @@ def _get_pr_commit_id(pr_number: str) -> tuple[str, str] | None:
 def post_pr_review_comments(pr_url: str, html_review: dict) -> bool:
     """Post inline review comments on the PR using the GitHub Pull Request Review API."""
     if not GITHUB_TOKEN or not GITHUB_REPO:
-        print("[QA] GitHub not configured – skipping PR comments.")
+        print("[QA] GitHub not configured - skipping PR comments.")
         return False
 
     pr_number = _get_pr_number(pr_url)
@@ -383,7 +383,7 @@ def run():
     messages = bus.receive("qa")
 
     if not messages:
-        print("[QA] No messages – nothing to do.")
+        print("[QA] No messages - nothing to do.")
         return
 
     msg = messages[-1]

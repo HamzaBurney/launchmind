@@ -14,8 +14,10 @@ build/
 venv/
 env/
 .venv/
+myvenv/
 
 # Output artifacts are intentionally tracked for publish snapshots.
+
 
 # OS
 .DS_Store

@@ -1,6 +1,6 @@
 """
 agents/ceo_agent.py
-CEO Agent – Orchestrator of the LaunchMind MAS.
+CEO Agent - Orchestrator of the LaunchMind MAS.
 
 Responsibilities:
  1. Receive the startup idea.
@@ -14,6 +14,7 @@ Responsibilities:
 
 import json
 import os
+import re
 from datetime import datetime, timezone
 
 from agents.llm_client import generate_text
@@ -107,13 +108,13 @@ def get_decision_log():
 
 
 # ---------------------------------------------------------------------------
-# Step 1 – Decompose the idea into agent tasks
+# Step 1 - Decompose the idea into agent tasks
 # ---------------------------------------------------------------------------
 def _decompose_idea(idea: str) -> dict:
     system = (
         "You are the CEO of a startup incubator. You receive raw startup ideas and break "
         "them into concrete tasks for three specialist agents: product, engineer, marketing. "
-        "Return ONLY a valid JSON object – no markdown fences, no extra text – with exactly "
+        "Return ONLY a valid JSON object - no markdown fences, no extra text - with exactly "
         "three keys: 'product_task', 'engineer_task', 'marketing_task'. Each value is a "
         "plain-string instruction addressed to that agent."
     )
@@ -143,15 +144,76 @@ def _decompose_idea(idea: str) -> dict:
     )
     _log(
         "Decomposed startup idea into agent tasks",
-        f"Idea requires product definition, technical build, and marketing – "
+        f"Idea requires product definition, technical build, and marketing - "
         f"each handled by a specialist agent.",
         f"Sent tasks: product='{tasks['product_task'][:60]}…'",
     )
     return tasks
 
 
+def _quick_idea_sanity_check(idea: str) -> tuple[bool, str]:
+    """Fast local guard for clearly irrelevant or malformed ideas."""
+    cleaned = " ".join(str(idea).split())
+    if not cleaned:
+        return False, "Startup idea is empty."
+
+    word_tokens = re.findall(r"[a-zA-Z0-9]+", cleaned)
+    if len(word_tokens) < 4:
+        return False, "Startup idea is too short to be actionable."
+
+    lower = cleaned.lower().strip()
+    disallowed_exact = {
+        "hi",
+        "hello",
+        "hey",
+        "test",
+        "random",
+        "asdf",
+        "qwerty",
+        "idk",
+    }
+    if lower in disallowed_exact:
+        return False, "Input appears to be a chat/gibberish message, not a startup idea."
+
+    return True, "Passed local sanity check."
+
+
+def _is_relevant_startup_idea(idea: str) -> tuple[bool, str]:
+    """Classify whether input is a startup idea worth running through the MAS."""
+    sane, sanity_reason = _quick_idea_sanity_check(idea)
+    if not sane:
+        return False, sanity_reason
+
+    system = (
+        "You are a strict classifier for startup ideas. "
+        "Return ONLY JSON with keys: is_relevant (boolean), reason (string). "
+        "Mark is_relevant=false for greetings, jokes, random text, questions unrelated "
+        "to building a product/business, or unsafe nonsense input."
+    )
+    user = (
+        "Determine whether this is a relevant startup/product idea for an autonomous "
+        f"startup pipeline:\n\n{idea}"
+    )
+
+    fallback = {
+        "is_relevant": True,
+        "reason": "Classifier unavailable; treating idea as relevant.",
+    }
+    try:
+        raw = _llm(system, user, max_tokens=250)
+        verdict = _safe_parse_json_object(raw, fallback)
+    except Exception:
+        verdict = fallback
+
+    is_relevant = bool(verdict.get("is_relevant", True))
+    reason = str(verdict.get("reason", "")).strip()
+    if is_relevant:
+        return True, reason or "Startup idea is relevant."
+    return False, reason or "Input is not a relevant startup idea."
+
+
 # ---------------------------------------------------------------------------
-# Step 2 – Review an agent's output
+# Step 2 - Review an agent's output
 # ---------------------------------------------------------------------------
 def _review_output(agent_name: str, output: dict, spec_context: str) -> tuple[bool, str]:
     """
@@ -188,7 +250,7 @@ def _review_output(agent_name: str, output: dict, spec_context: str) -> tuple[bo
 
 
 # ---------------------------------------------------------------------------
-# Step 3 – Post final Slack summary
+# Step 3 - Post final Slack summary
 # ---------------------------------------------------------------------------
 def _post_final_slack_summary(idea: str, pr_url: str, issue_url: str, marketing_copy: dict):
     """Post a final CEO summary to Slack via the Marketing agent's helper."""
@@ -246,6 +308,54 @@ def run(idea: str, max_revisions: int = 2):
     print("=" * 60)
     print(f"Startup idea: {idea}\n")
 
+    is_relevant, relevance_reason = _is_relevant_startup_idea(idea)
+    if not is_relevant:
+        _log(
+            "Rejected irrelevant startup idea",
+            relevance_reason,
+            "Stopped workflow safely before any agent dispatch",
+        )
+
+        os.makedirs("logs", exist_ok=True)
+        with open("logs/ceo_decisions.json", "w", encoding="utf-8") as f:
+            json.dump(_decision_log, f, indent=2)
+        bus.dump_log()
+
+        print("[CEO] Workflow terminated safely: irrelevant startup idea.")
+
+        skipped_artifact_update = {
+            "status": "skipped",
+            "committed": False,
+            "committed_files": [],
+            "warnings": [],
+            "error": "",
+        }
+        return {
+            "idea": idea,
+            "product_spec": {},
+            "engineer_result": {
+                "status": "skipped_irrelevant_idea",
+                "reason": relevance_reason,
+            },
+            "marketing_result": {
+                "status": "skipped_irrelevant_idea",
+                "reason": relevance_reason,
+            },
+            "qa_result": {
+                "verdict": "skipped",
+                "issues": [f"Idea rejected: {relevance_reason}"],
+            },
+            "pr_url": "",
+            "issue_url": "",
+            "publish_executed": False,
+            "draft_attempts_used": 0,
+            "workflow_status": "terminated_irrelevant_idea",
+            "artifact_update": skipped_artifact_update,
+            "readme_update": skipped_artifact_update,
+            "decision_log": _decision_log,
+            "termination_reason": relevance_reason,
+        }
+
     # ── 1. Decompose idea ──────────────────────────────────────────────
     tasks = _decompose_idea(idea)
 
@@ -270,7 +380,7 @@ def run(idea: str, max_revisions: int = 2):
             None,
         )
         if not product_result:
-            print("[CEO] No result from Product agent – retrying…")
+            print("[CEO] No result from Product agent - retrying…")
             continue
 
         product_spec = product_result["payload"].get("spec") or product_result["payload"]
